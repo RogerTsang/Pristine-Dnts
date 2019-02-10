@@ -1,14 +1,31 @@
 ﻿import React from 'react';
-import { Route } from 'react-router';
-import Layout from './components/Layout';
-import Home from './components/Home';
-import Counter from './components/Counter';
-import FetchData from './components/FetchData';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { Route, Switch } from 'react-router';
+import route from './route';
 
-export default () => (
-  <Layout>
-    <Route exact path='/' component={Home} />
-    <Route path='/counter' component={Counter} />
-    <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
-  </Layout>
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#221e22'
+        },
+        secondary: {
+            main: '#5c2d1f'
+        },
+    },
+    typography: {
+        fontSize: 14,
+        htmlFontSize: 12
+    }
+});
+
+const App = () => (
+    <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Switch>
+            {route.map(route => <Route key={route.key} path={route.path} exact={route.exact} component={route.component} />)}
+        </Switch>
+    </MuiThemeProvider>
 );
+
+export default App;
